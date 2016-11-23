@@ -2351,6 +2351,18 @@ ruleTester.run("indent", rule, {
             "        }\n" +
             ")",
             options: [4, {CallExpression: {arguments: "first"}}],
+        },
+        {
+            code: "new Foo"
+        },
+        {
+            code: "new (Foo)"
+        },
+        {
+            code:
+            "if (Foo) {\n" +
+            "    new Foo\n" +
+            "}"
         }
     ],
     invalid: [
@@ -4665,6 +4677,11 @@ ruleTester.run("indent", rule, {
             ")",
             options: [4, {CallExpression: {arguments: "first"}}],
             errors: expectedErrors([[3, 8, 4, "Punctuator"], [4, 12, 8, "Identifier"], [5, 8, 4, "Punctuator"]])
+        },
+        {
+            code: "  new Foo",
+            output: "new Foo",
+            errors: expectedErrors([1, 0, 2, "Keyword"])
         }
     ]
 });
